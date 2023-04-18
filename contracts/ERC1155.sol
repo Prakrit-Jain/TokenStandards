@@ -14,7 +14,7 @@ contract ERC1155 is IERC1155 {
         require(_from == msg.sender || _approveAll[_from][msg.sender] == true, "Not authorized to transfer");
         uint256 fromBalance = _balance[_from][_id];
         require(fromBalance >= _value, "insufficient balance for transfer");
-        _balance[_from][_id] -= _value;
+        _balance[_from][_id] = fromBalance - _value;
         _balance[_to][_id] += _value;
         require(_checkSafeTransfer(msg.sender, _from, _to, _id, _value, _data) , "transfer to non ERC1155Receiver implementer");
         emit TransferSingle(msg.sender, _from, _to, _id, _value);  
@@ -66,6 +66,27 @@ contract ERC1155 is IERC1155 {
             size := extcodesize(addr)
         }
         return size > 0;
+    }
+
+    function mint(address _to, uint _id, uint _value) external returns (bool) {
+        require(_to != address(0), "can't mint to zero address");
+        _balance[_to][_id] += _value;
+        require(_checkSafeTransfer(msg.sender, address(0), _to, _id, _value, "") , "transfer to non ERC1155Receiver implementer");
+        emit TransferSingle(msg.sender, address(0), _to, _id, _value);
+        return true;    
+    }
+
+    function mintBatch(address _to, uint[] memory _ids, uint[] memory _values) external returns (bool) {
+        require(_to != address(0), "can't mint to zero address");
+        require(_ids.length == _values.length, "accounts and ids length mismatch");
+        for(uint i = 0; i < _ids.length; i++) {
+            uint id = _ids[i];
+            uint value = _values[i];
+            _balance[_to][id] += value;
+        }
+        require(_checkSafeBatchTransfer(msg.sender, address(0), _to, _ids, _values, ""), "transfer to non ERC1155Receiver implementer");
+        emit TransferBatch(msg.sender, address(0), _to, _ids, _values);
+        return true;
     }
 
     function _checkSafeTransfer(

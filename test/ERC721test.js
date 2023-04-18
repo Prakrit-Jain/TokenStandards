@@ -89,7 +89,7 @@ describe("ERC721 contract", function() {
             
         })
 
-        it.only("should safely transfer token to recipent address", async function() {
+        it("should safely transfer token to recipent address", async function() {
             expect(await hardhatToken.safeTransferFrom(
                 user2.address,
                 user1.address,
@@ -97,25 +97,25 @@ describe("ERC721 contract", function() {
                 )
             ).to.be.revertedWith("Owner not verified");
 
-            // await expect(hardhatToken.safeTransferFrom(
-            //     owner.address,
-            //     ZeroAddress,
-            //     1
-            //     )
-            // ).to.be.revertedWith("to cannot be zero address");
-            // await expect(hardhatToken.connect(user1).safeTransferFrom(
-            //     owner.address,
-            //     user1.address,
-            //     1
-            //     )
-            // ).to.be.revertedWith("Not authorized to transfer");
-            // await hardhatToken.transferFrom(owner.address, user2.address, 1);
-            // const balanceOwner = await hardhatToken.balanceOf(owner.address);
-            // const balanceUser2= await hardhatToken.balanceOf(user2.address);
+            await expect(hardhatToken.safeTransferFrom(
+                owner.address,
+                ZeroAddress,
+                1
+                )
+            ).to.be.revertedWith("to cannot be zero address");
+            await expect(hardhatToken.connect(user1).safeTransferFrom(
+                owner.address,
+                user1.address,
+                1
+                )
+            ).to.be.revertedWith("Not authorized to transfer");
+            await hardhatToken.safeTransferFrom(owner.address, user2.address, 1);
+            const balanceOwner = await hardhatToken.balanceOf(owner.address);
+            const balanceUser2= await hardhatToken.balanceOf(user2.address);
             
-            // expect(balanceOwner).to.be.equal(0);
-            // expect(balanceUser2).to.be.equal(1);
-            // expect(await hardhatToken.ownerOf(1)).to.equal(user2.address);
+            expect(balanceOwner).to.be.equal(0);
+            expect(balanceUser2).to.be.equal(1);
+            expect(await hardhatToken.ownerOf(1)).to.equal(user2.address);
             
         });
 

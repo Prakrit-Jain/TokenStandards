@@ -6,8 +6,12 @@
   "scripts": {
     "test": "npx hardhat test",
     "start": "npx hardhat test",
-    "deploy": "npx hardhat run scripts/deploy.js --network sepolia",
-    "fork:deploy": "npx hardhat run scripts/deploy.js --network hardhat"
+    "sepolia:deploy-ERC721": "npx hardhat run scripts/ERC721deploy.js --network sepolia",
+    "fork:deploy-ERC721": "npx hardhat run scripts/ERC721deploy.js --network hardhat",
+    "sepolia:deploy-ERC20": "npx hardhat run scripts/ERC20deploy.js --network sepolia",
+    "fork:deploy-ERC20": "npx hardhat run scripts/ERC20deploy.js --network hardhat",
+    "sepolia:deploy-ERC1155": "npx hardhat run scripts/ERC1155deploy.js --network sepolia",
+    "fork:deploy-ERC1155": "npx hardhat run scripts/ERC1155deploy.js --network hardhat"
   },
   "keywords": [],
   "author": "",

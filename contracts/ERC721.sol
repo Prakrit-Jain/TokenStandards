@@ -94,6 +94,7 @@ contract ERC721 is IERC721 {
         require(ownerOf[_tokenId] == address(0), "token already minted");
         balanceOf[_to] += 1;
         ownerOf[_tokenId] = _to;
+        require(_checkOnERC721Received(address(0), _to, _tokenId, ""), "transfer to non ERC721Receiver implementer"); 
         emit Transfer(address(0), _to, _tokenId);
         return true;
     }
