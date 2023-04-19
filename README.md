@@ -2,12 +2,14 @@
 
 This project demonstrates a basic implementation of popular token standards.
 
-Try running some of the following tasks:
+Run the following tasks :
 
-```shell
-npm run test
-npm run deploy
-npx hardhat help
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-```
+Run the unit Tests :  npm run test 
+Deploy ERC20 on sepolia : npm run sepolia:deploy-ERC20
+Deploy ERC721 on sepolia : npm run sepolia:deploy-ERC721
+Deploy ERC1155 on sepolia : npm run sepolia:deploy-ERC1155
+Deploy ERC20 on hardhat-fork : npm run fork:deploy-ERC20
+Deploy ERC721 on hardhat-fork : npm run fork:deploy-ERC721
+Deploy ERC1155 on hardhat-fork : npm run fork:deploy-ERC1155
+For Gas Coverage : REPORT_GAS=true npx hardhat test
+
